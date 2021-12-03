@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:state_management/games/cubit/games_cubit.dart';
 import 'package:state_management/games/screens/games_screen/games_screen.dart';
 
 void main() async {
@@ -15,7 +17,8 @@ class F2PGamesApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: const GamesScreen(),
+      home:
+          BlocProvider(create: (_) => GamesCubit(), child: const GamesScreen()),
     );
   }
 }

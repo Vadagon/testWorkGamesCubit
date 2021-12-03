@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:state_management/games/cubit/games_cubit.dart';
+import 'package:state_management/games/domain/game.dart';
 import 'package:state_management/games/domain/games_filter.dart';
 import 'package:state_management/games/screens/games_screen/widgets/filter_widget.dart';
 
@@ -28,10 +31,18 @@ class _GamesScreenState extends State<GamesScreen> {
               slivers: [
                 FilterWidget(
                   filter: GamesFilter(),
-                  onChangeCategory: (value) {},
-                  onChangeSortBy: (value) {},
+                  onChangeCategory: (value) {
+                    // fetchGames(value);
+                    context.read<GamesCubit>().changeCategory(value);
+                  },
+                  onChangeSortBy: (value) {
+                    context.read<GamesCubit>().changeSortBy(value);
+                  },
                 ),
-                const GamesList(games: []),
+                BlocBuilder<GamesCubit, List<Game>>(builder: (context, state) {
+                  // return widget here based on BlocA's state
+                  return GamesList(games: state);
+                })
               ],
             ),
           ),
